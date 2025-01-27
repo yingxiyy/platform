@@ -1,0 +1,32 @@
+*~
+
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# IDE Files
+.classpath
+.project
+.settings/
+.metadata/
+.recommenders/
+.idea
+*.ipr
+*.iws
+.vscode
+
+# Generated stuff
+target/
+target-ide/
+bin/
+*.iml
+maven-metadata-local*
+.DS_Store
+log
+logs

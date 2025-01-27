@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package com.optical.network.common;
+
+//option java_package = "com.optical.network.common";
+//option java_multiple_files = true;
+
+// Define an example enum
+enum UserRole {
+    USER_ROLE_UNSPECIFIED = 0; // Default value
+    SUPERVISOR = 1;
+    ADMIN = 2;
+    OPERATOR = 3;
+    VIEWER = 4;
+}

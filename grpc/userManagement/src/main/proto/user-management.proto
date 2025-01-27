@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package com.optical.network.usermanagement;
+
+//option java_package = "com.optical.network.usermanagement.grpc";
+//option java_outer_classname = "UserManagementProto";
+
+import "google/protobuf/empty.proto"; // Add this import
+import "common-type.proto";
+
+// User message definition
+message User {
+  string id = 1;
+  string username = 2;
+  string password = 3;
+  com.optical.network.common.UserRole role = 4; // List of role (admin, operator, viewer)
+  repeated string domains = 5; // List of management access domains
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+// Login request and response
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string token = 1;
+  uint32 expires_in = 2;
+}
+
+// Logout request
+message LogoutRequest {
+}
+
+// Forceout request, because one user can login in different place (session), thus token is the key
+message ForceoutRequest {
+    string username = 1;
+    string token = 2; 
+}
+
+// User registration request and response
+message CreateUserRequest {
+  string username = 1;
+  string password = 2;
+  com.optical.network.common.UserRole role = 3;
+  repeated string domains = 4;
+}
+
+message CreateUserResponse {
+  string id = 1;
+  string username = 2;
+}
+
+// User Management Service
+service UserManagementService {
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+  rpc GetAllUsers(google.protobuf.Empty) returns (stream User);
+
+  //UI prvide id, for finding the user, and can update password, role, domains. 
+  rpc updateUser(User) returns (google.protobuf.Empty);
+  
+  //UI prvide id, for finding the user and remove it, if the user is login, system will force it logout.
+  rpc deleteUser(User) returns (google.protobuf.Empty);
+
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc Logout(LogoutRequest) returns (google.protobuf.Empty);
+  rpc Forceout(ForceoutRequest) returns (google.protobuf.Empty);
+}
